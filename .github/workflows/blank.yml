@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       githubEnvironment: ${{ steps.environment.outputs.githubEnvironment }}
-      buildEnvironemt: ${{ steps.step2.outputs.buildEnvironemt }}
+      buildEnvironment: ${{ steps.step2.outputs.buildEnvironment }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -37,8 +37,8 @@ jobs:
           echo "${{ github.event.base_ref }}"
       - id: githubEnvironment
         run: echo "githubEnvironment=${{ github.ref == 'refs/heads/main' && 'uat' || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'tag') && 'prod' || 'development' }}">> $GITHUB_ENV
-      - id: buildEnvironemt
-        run: echo "buildEnvironemt=${{ github.ref == 'refs/heads/main' && 'uat2' || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'tag') && 'prod' || 'dev2' }}">> $GITHUB_ENV
+      - id: buildEnvironment
+        run: echo "buildEnvironment=${{ github.ref == 'refs/heads/main' && 'uat2' || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'tag') && 'prod' || 'dev2' }}">> $GITHUB_ENV
           
   deploy_dev:
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
       - name: Test
         run: echo $Environment
       - name: dev build
-        run: echo ${{needs.setup.outputs.githubEnvironment, needs.setup.outputs.buildEnvironemt}}
+        run: echo "${{needs.setup.outputs.githubEnvironment}} ${{needs.setup.outputs.buildEnvironment}}"
 
   deploy_uat:
     runs-on: ubuntu-latest
