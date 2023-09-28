@@ -40,38 +40,16 @@ jobs:
       - id: buildEnvironment
         run: echo "buildEnvironment=${{ github.ref == 'refs/heads/main' && 'uat2' || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'tag') && 'prod' || 'dev2' }}">> $GITHUB_OUTPUT
           
-  deploy_dev:
+  deploy:
     runs-on: ubuntu-latest
     needs: setup
     if: github.ref == 'refs/heads/development'
     environment:
-      name: 'dev'
-      url: 'www.dev.com'
+      name: ${{needs.setup.outputs.githubEnvironment}}
       
     steps:
-      - name: dev build
-        run: echo "${{needs.setup.outputs.githubEnvironment}} ${{needs.setup.outputs.buildEnvironment}}"
+      - name: ${{needs.setup.outputs.githubEnvironment}} deployemnt
+        run: echo "build completd in ${{needs.setup.outputs.githubEnvironment}} ${{needs.setup.outputs.buildEnvironment}}"
 
-  deploy_uat:
-    runs-on: ubuntu-latest
-    needs: setup
-    if: github.ref == 'refs/heads/main'
-    environment:
-      name: 'uat'
-      url: 'www.uat.com'
-      
-    steps:
-       - name: uat build
-         run: echo "uat build completed"
-  deploy_prod:
-    runs-on: ubuntu-latest
-    needs: setup
-    if: github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'tag')
-    environment:
-      name: 'prod'
-      url: 'www.prod.com'
-      
-    steps:
-       - name: prod build
-         run: echo "prod build completed"
+
        
