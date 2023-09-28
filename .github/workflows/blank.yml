@@ -37,11 +37,11 @@ jobs:
           echo "${{ github.event.base_ref }}"
       - id: githubEnvironment
         run: echo "githubEnvironment=${{ github.ref == 'refs/heads/main' && 'uat' 
-                                          || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'tag') && 'prod' 
+                                          || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'version') && 'prod' 
                                           || github.ref == 'refs/heads/development' && 'development' || ''}}">> $GITHUB_OUTPUT
       - id: buildEnvironment
         run: echo "buildEnvironment=${{ github.ref == 'refs/heads/main' && 'uat2' 
-                                        || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'tag') && 'prod' 
+                                        || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'version') && 'prod' 
                                         || 'dev2' }}">> $GITHUB_OUTPUT
           
   deploy:
