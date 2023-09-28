@@ -46,8 +46,10 @@ jobs:
       url: 'www.dev.com'
       
     steps:
-       - name: dev build
-         run: echo "dev build completed"
+      - name: Test
+        run: echo $Environment
+      - name: dev build
+        run: echo "dev build completed"
 
   deploy_uat:
     runs-on: ubuntu-latest
