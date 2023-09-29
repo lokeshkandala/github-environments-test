@@ -42,9 +42,9 @@ jobs:
       - id: buildEnvironment
         run: echo "buildEnvironment=${{ github.ref == 'refs/heads/main' && 'uat2' 
                                         || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'version') && 'prod' 
-                                        || 'dev2' }}">> $GITHUB_OUTPUT
+                                        || 'dev2' }}">> $GITHUB_OUTPUT >> $GITHUB_ENV
       - name: Print output variables
-        run: echo ${{needs.setup.outputs.buildEnvironment}}
+        run: echo ${{env.buildEnvironment}}
           
   deploy:
     runs-on: ubuntu-latest
