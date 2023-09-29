@@ -43,6 +43,8 @@ jobs:
         run: echo "buildEnvironment=${{ github.ref == 'refs/heads/main' && 'uat2' 
                                         || github.event.base_ref == 'refs/heads/main' && contains(github.ref, 'version') && 'prod' 
                                         || 'dev2' }}">> $GITHUB_OUTPUT
+      - name: Print output variables
+        run: echo "$buildEnvironment"
           
   deploy:
     runs-on: ubuntu-latest
